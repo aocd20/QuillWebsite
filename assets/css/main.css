@@ -2903,49 +2903,56 @@ input, select, textarea {
 	background: #585858;
 	color: #ffffff;
 	z-index: 10002;
-	display: flex; /* Use flexbox for centering */
-	align-items: center; /* Center vertically */
-	justify-content: center; /* Center horizontally */
   }
   
-  #menu > .inner {
+  /* Inner container as a flex container with even spacing */
+  #menu .inner {
+	display: flex;
+	justify-content: space-evenly; /* Equal spacing between items */
+	align-items: center;
 	width: 100%;
-	max-width: 1200px; /* Optional: Limit width for larger screens */
-	padding: 0 20px; /* Add padding to the sides */
+	max-width: 1200px; /* Optional: Limit width on larger screens */
+	margin: 0 auto; /* Centres the inner container */
+	padding: 0 20px;
   }
   
-  #menu > .inner > ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	display: flex; /* Make the list items horizontal */
-	justify-content: center; /* Center the menu items */
-	align-items: flex-start; /* Align items to the top */
-  }
-  
-  #menu > .inner > ul > li {
-	padding: 0;
-  }
-  
-  #menu > .inner > ul > li a {
-	display: block;
-	padding: 10px 1.5em; /* Adjust vertical and horizontal padding */
-	line-height: 1.2; /* Reduce line-height to move text upward */
-	border: 0;
+  /* General styling for all menu items */
+  #menu .inner .menu-item {
 	color: inherit;
 	text-decoration: none;
-	transition: background-color 0.3s ease; /* Smooth hover effect */
+	padding: 10px 1.5em;
+	transition: background-color 0.3s ease;
   }
   
-  #menu > .inner > ul > li a:hover {
-	background-color: rgba(255, 255, 255, 0.1); /* Add hover effect */
+  /* Hover effect for clickable items */
+  #menu .inner a.menu-item:hover {
+	background-color: rgba(255, 255, 255, 0.1);
   }
   
-  /* Add padding to the main content to prevent overlap */
+  /* Logo-specific styling (non-clickable) */
+  #menu .inner .menu-item.logo {
+	display: flex;
+	align-items: center;
+	cursor: default; /* Ensures the pointer doesn't indicate clickability */
+  }
+  
+  #menu .inner .menu-item.logo img {
+	height: 40px; /* Adjust as needed */
+	width: auto;
+  }
+  
+  #menu .inner .menu-item.logo .brand-text {
+	margin-left: 10px;
+	font-size: 1.2em;
+	font-weight: bold;
+  }
+  
+  /* Prevent main content from being overlapped by the menu */
   #wrapper {
-	padding-top: 60px; /* Match the height of the menu bar */
+	padding-top: 60px; /* Same as the height of the menu bar */
   }
-
+  
+  
 /* Footer */
 
 	#footer {
