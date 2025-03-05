@@ -11,15 +11,84 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+        <!-- Custom Styles for Publication Rows and Contact Box -->
+        <style>
+            /* Container for publication rows */
+            .papers-container {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
+            }
+            /* Each paper row as a clickable card */
+            .paper-card {
+                display: flex;
+                align-items: stretch; /* Ensures equal height */
+                text-decoration: none;
+                color: inherit;
+                background-color: #fff;
+                border-radius: 8px;
+                overflow: hidden;
+                transition: background-color 0.3s ease;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                padding: 10px;
+            }
+            .paper-card:hover {
+                background-color: #c9c9c9;
+            }
+            /* Paper image container */
+            .paper-image {
+                flex: 0 0 180px; /* Fixed width */
+                height: 180px; /* Fixed height */
+            }
+            .paper-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+            /* Paper details with flexible wrapping */
+            .paper-details {
+                padding-left: 15px;
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .paper-title {
+                font-size: 1.2em;
+                margin: 0;
+                word-wrap: break-word;
+            }
+            .paper-authors {
+                margin: 5px 0 0 0;
+                font-size: 0.9em;
+                color: #555;
+                word-wrap: break-word;
+            }
+            .paper-classification {
+                margin: 5px 0 0 0;
+                font-size: 1em;
+                color: #555;
+                word-wrap: break-word;
+            }
+            .paper-date {
+				text-align: right;
+				flex: 1;
+
+                margin: 5px 0 0 0;
+                font-size: 0.9em;
+                color: #555;
+                word-wrap: break-word;
+            }
+        </style>
 	</head>
 	<body class="is-preload">
 		<!-- Wrapper -->
-			<div id="wrapper">
-
-
-				<!-- Menu -->
-				<nav id="menu">
-					<div class="inner">
+		<div id="wrapper">
+			<!-- Menu -->
+			<nav id="menu">
+				<div class="inner">
 					<div class="menu-item logo">
 						<img src="images/QuillHeaderLogo.svg" alt="Logo">
 						<span class="brand-text">QuILL</span>
@@ -30,200 +99,107 @@
 					<a href="news.html" class="menu-item">News</a>
 					<a href="gallery.html" class="menu-item">Gallery</a>
 					<a href="contact.html" class="menu-item">Contact</a>
-					</div>
-				</nav>
+				</div>
+			</nav>
   
+			<!-- Main -->
+			<div id="main">
+				<div class="inner">
+					<section>
+						<h1>Publications</h1>
+						<div class="papers-container">
+							<!-- Paper Row 1 -->
+							<a href="https://opg.optica.org/optica/fulltext.cfm?uri=optica-11-11-1490&id=561914" class="paper-card">
+								<div class="paper-image">
+									<img src="images/pic01.jpg" alt="Paper 1 Image">
+								</div>
+								<div class="paper-details">
+									<p class="paper-classification">Journal Artical </p>
+									<h1 class="paper-title">Tunable Frequency Conversion in Doped Photonic Crystal Fibre</h1>
+									<p class="paper-authors"><b>Leah R. Murphy</b>, <b>Mateusz J. Olszewski</b>, Petros Androvitsaneas, Miguel Alvarez Perez, Will A. M. Smith, Anthony J. Bennett, Peter J. Mosley, and <b>Alex O. C. Davis</b>.</p>
+									<p class="paper-date">25/10/2024 </p>
 
-				<!-- Main -->
-				<div id="main">
-					<div class="inner">
-                        <!--Below is some javascript that will allow table headers to be clicked on to sorted by title or date-->
-                        <script type="text/javascript">
-                            /* 
-                               Willmaster Table Sort
-                               Version 1.1
-                               August 17, 2016
-                               Updated GetDateSortingKey() to correctly sort two-digit months and days numbers with leading 0.
-                               Version 1.0, July 3, 2011
-                            
-                               Will Bontrager
-                               https://www.willmaster.com/
-                               Copyright 2011,2016 Will Bontrager Software, LLC
-                            
-                               This software is provided "AS IS," without 
-                               any warranty of any kind, without even any 
-                               implied warranty such as merchantability 
-                               or fitness for a particular purpose.
-                               Will Bontrager Software, LLC grants 
-                               you a royalty free license to use or 
-                               modify this software provided this 
-                               notice appears on all copies. 
-                            */
-                            //
-                            // One placed to customize - The id value of the table tag.
-                            
-                            var TableIDvalue = "indextable";
-                            
-                            //
-                            //////////////////////////////////////
-                            var TableLastSortedColumn = -1;
-                            function SortTable() {
-                            var sortColumn = parseInt(arguments[0]);
-                            var type = arguments.length > 1 ? arguments[1] : 'T';
-                            var dateformat = arguments.length > 2 ? arguments[2] : '';
-                            var table = document.getElementById(TableIDvalue);
-                            var tbody = table.getElementsByTagName("tbody")[0];
-                            var rows = tbody.getElementsByTagName("tr");
-                            var arrayOfRows = new Array();
-                            type = type.toUpperCase();
-                            dateformat = dateformat.toLowerCase();
-                            for(var i=0, len=rows.length; i<len; i++) {
-                                arrayOfRows[i] = new Object;
-                                arrayOfRows[i].oldIndex = i;
-                                var celltext = rows[i].getElementsByTagName("td")[sortColumn].innerHTML.replace(/<[^>]*>/g,"");
-                                if( type=='D' ) { arrayOfRows[i].value = GetDateSortingKey(dateformat,celltext); }
-                                else {
-                                    var re = type=="N" ? /[^\.\-\+\d]/g : /[^a-zA-Z0-9]/g;
-                                    arrayOfRows[i].value = celltext.replace(re,"").substr(0,25).toLowerCase();
-                                    }
-                                }
-                            if (sortColumn == TableLastSortedColumn) { arrayOfRows.reverse(); }
-                            else {
-                                TableLastSortedColumn = sortColumn;
-                                switch(type) {
-                                    case "N" : arrayOfRows.sort(CompareRowOfNumbers); break;
-                                    case "D" : arrayOfRows.sort(CompareRowOfNumbers); break;
-                                    default  : arrayOfRows.sort(CompareRowOfText);
-                                    }
-                                }
-                            var newTableBody = document.createElement("tbody");
-                            for(var i=0, len=arrayOfRows.length; i<len; i++) {
-                                newTableBody.appendChild(rows[arrayOfRows[i].oldIndex].cloneNode(true));
-                                }
-                            table.replaceChild(newTableBody,tbody);
-                            } // function SortTable()
-                            
-                            function CompareRowOfText(a,b) {
-                            var aval = a.value;
-                            var bval = b.value;
-                            return( aval == bval ? 0 : (aval > bval ? 1 : -1) );
-                            } // function CompareRowOfText()
-                            
-                            function CompareRowOfNumbers(a,b) {
-                            var aval = /\d/.test(a.value) ? parseFloat(a.value) : 0;
-                            var bval = /\d/.test(b.value) ? parseFloat(b.value) : 0;
-                            return( aval == bval ? 0 : (aval > bval ? 1 : -1) );
-                            } // function CompareRowOfNumbers()
-                            
-                            function GetDateSortingKey(format,text) {
-                            if( format.length < 1 ) { return ""; }
-                            format = format.toLowerCase();
-                            text = text.toLowerCase();
-                            text = text.replace(/^[^a-z0-9]*/,"");
-                            text = text.replace(/[^a-z0-9]*$/,"");
-                            if( text.length < 1 ) { return ""; }
-                            text = text.replace(/[^a-z0-9]+/g,",");
-                            var date = text.split(",");
-                            if( date.length < 3 ) { return ""; }
-                            var d=0, m=0, y=0;
-                            for( var i=0; i<3; i++ ) {
-                                var ts = format.substr(i,1);
-                                if( ts == "d" ) { d = date[i]; }
-                                else if( ts == "m" ) { m = date[i]; }
-                                else if( ts == "y" ) { y = date[i]; }
-                                }
-                            d = d.replace(/^0/,"");
-                            if( d < 10 ) { d = "0" + d; }
-                            if( /[a-z]/.test(m) ) {
-                                m = m.substr(0,3);
-                                switch(m) {
-                                    case "jan" : m = String(1); break;
-                                    case "feb" : m = String(2); break;
-                                    case "mar" : m = String(3); break;
-                                    case "apr" : m = String(4); break;
-                                    case "may" : m = String(5); break;
-                                    case "jun" : m = String(6); break;
-                                    case "jul" : m = String(7); break;
-                                    case "aug" : m = String(8); break;
-                                    case "sep" : m = String(9); break;
-                                    case "oct" : m = String(10); break;
-                                    case "nov" : m = String(11); break;
-                                    case "dec" : m = String(12); break;
-                                    default    : m = String(0);
-                                    }
-                                }
-                            m = m.replace(/^0/,"");
-                            if( m < 10 ) { m = "0" + m; }
-                            y = parseInt(y);
-                            if( y < 100 ) { y = parseInt(y) + 2000; }
-                            return "" + String(y) + "" + String(m) + "" + String(d) + "";
-                            } // function GetDateSortingKey()
-                            </script>
-                            
-                            
-                        <!-- Form -->
-                        <section>
-                            <!--This is a test table to see if js works-->
-                            <h1>Publications</h1>
-                            <!--<h3>Default</h3> -->
-                            <div class="table-wrapper">
-                                <table id="indextable">
-                                    <thead>
-                                        <tr>
-                                            <th><a href="javascript:SortTable(0,'T');">Name</a></th> 
-                                            <th><a href="javascript:SortTable(1,'T');">Authors</a></th> 
-                                            <th><a href="javascript:SortTable(2,'T');">Type</a></th> 
-                                            <th><a href="javascript:SortTable(3,'D','dmy');">Date</a></th> 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><a href="https://opg.optica.org/optica/fulltext.cfm?uri=optica-11-11-1490&id=561914">Tunable frequency conversion in doped photonic crystal fiber pumped near degeneracy</a></td>
-                                            <td><b>Leah R. Murphy</b>, <b>Mateusz J. Olszewski</b>, Petros Androvitsaneas, Miguel Alvarez Perez, Will A. M. Smith, Anthony J. Bennett, Peter J. Mosley, and <b>Alex O. C. Davis</b></td>
-                                            <td>Journal Article</td>
-                                            <td>25/10/2024</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="https://pubs.aip.org/aip/apq/article/1/3/030901/3304785">Microstructured optical fibers for quantum applications: Perspective</a></td>
-                                            <td>Cameron McGarry, Kerrianne Harrington, <b>Alex O. C. Davis</b>, Peter J. Mosley,
-                                                and Kristina R. Rusimova</td>
-                                                <td>Journal Article</td>    
-                                            <td>29/07/2024</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="https://ieeexplore.ieee.org/abstract/document/10647265">Tunable near-degenerate frequency conversion using doped photonic crystal fibre</a></td>
-                                            <td><b>Leah R. Murphy</b>, <b>Mateusz J. Olszewski</b>, Petros Androvitsaneas, Miguel Alvarez Perez, Will A. M. Smith, Anthony J. Bennett, Peter J. Mosley, and <b>Alex O. C. Davis</b></td>
-                                                <td>Conference paper</td>    
-                                            <td>07/2024</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="https://opg.optica.org/abstract.cfm?uri=cleo_europe-2023-cd_14_5">Squeezed vacuum from a photonic crystal fibre parametric oscillator</a></td>
-                                            <td><b>Alex O.C. Davis</b>, Alex I. Flint, Will A.M. Smith, Peter J. Mosley, Rex H.S. Bannerman, Kerrianne Harrington, Charlotte Parry, and Peter G.R. Smith</td>
-                                                <td>Conference paper</td>    
-                                            <td>06/2023</td>
-                                        </tr>
-                                    </tbody>
-                                    </tfoot>
-                                </table>
-                        </section>
-                    </div>
-				<!-- Footer -->
-					<footer id="footer">
-						<div class="inner">
-							<ul class="copyright">
-								<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-							</ul>
+								</div>
+							</a>
+							<!-- Paper Row 2 -->
+							<a href="https://pubs.aip.org/aip/apq/article/1/3/030901/3304785" class="paper-card">
+								<div class="paper-image">
+									<img src="images/2024QuantumApplicationPerspectiveThumbnail.png" alt="Paper 2 Image">
+								</div>
+								<div class="paper-details">
+									<p class="paper-classification">Journal Artical </p>
+									<h1 class="paper-title">Microstructured Optical Fibres for Quantum Applications</h1>
+									<p class="paper-authors">Cameron McGarry, Kerrianne Harrington, <b>Alex O. C. Davis</b>, Peter J. Mosley, and Kristina R. Rusimova</p>
+									<p class="paper-date">29/07/2024 </p>								
+								</div>
+							</a>
+							<!-- Paper Row 3 -->
+							<a href="https://ieeexplore.ieee.org/abstract/document/10647265" class="paper-card">
+								<div class="paper-image">
+									<img src="images/pic01.jpg" alt="Paper 3 Image">
+								</div>
+								<div class="paper-details">
+									<p class="paper-classification">Conference Paper </p>
+									<h1 class="paper-title">Tunable Near-Degenerate Frequency Conversion</h1>
+									<p class="paper-authors"><b>Leah R. Murphy</b>, <b>Mateusz J. Olszewski</b>, Petros Androvitsaneas, Miguel Alvarez Perez, Will A. M. Smith, Anthony J. Bennett, Peter J. Mosley, and <b>Alex O. C. Davis</b>.</p>
+									<p class="paper-date">07/2024 </p>
+								</div>
+							</a>
+							<!-- Paper Row 4 -->
+							<a href="https://opg.optica.org/abstract.cfm?uri=cleo_europe-2023-cd_14_5" class="paper-card">
+								<div class="paper-image">
+									<img src="images/2023CLEOThumbnail.png" alt="Paper 4 Image">
+								</div>
+								<div class="paper-details">
+									<p class="paper-classification">Conference Paper </p>
+									<h1 class="paper-title">Squeezed Vacuum from a Photonic Crystal Fibre Parametric Oscillator</h1>
+									<p class="paper-authors"><b>Alex O.C. Davis</b>, Alex I. Flint, Will A.M. Smith, Peter J. Mosley, Rex H.S. Bannerman, Kerrianne Harrington, Charlotte Parry, and Peter G.R. Smith</p>
+									<p class="paper-date">06/2024 </p>
+								</div>
+							</a>
 						</div>
-					</footer>
+						<section>
+							<h2>Get in contact</h2>
+							<form method="post" action="#">
+								<div class="row gtr-uniform">
+									<div class="col-6 col-12-xsmall">
+										<input type="text" name="demo-name" id="demo-name" value="" placeholder="Name" />
+									</div>
+									<div class="col-6 col-12-xsmall">
+										<input type="email" name="demo-email" id="demo-email" value="" placeholder="Email" />
+									</div>
+									<div class="col-6 col-12-small">
+										<input type="checkbox" id="demo-copy" name="demo-copy">
+										<label for="demo-copy">Email me a copy</label>
+									</div>
+									<div class="col-12">
+										<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
+									</div>
+									<div class="col-12">
+										<ul class="actions">
+											<li><input type="submit" value="Send Message" class="primary" /></li>
+										</ul>
+									</div>
+								</div>
+							</form>
+						</section>
+					<!-- Footer -->
+						<footer id="footer">
+							<div class="inner">
+								<ul class="copyright">
+									<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+								</ul>
+							</div>
+						</footer>
+	
+				</div>
 
-			</div>
-
+		</div>
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
 	</body>
 </html>
